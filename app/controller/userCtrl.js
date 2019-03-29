@@ -21,7 +21,7 @@ var CONST = require('../../config/constant');
 var registration = (req, res)=>{
 
       let Password = req.body.password;
-      let confirmpassword = req.body.confirmpassword;
+      let confirmpassword = req.body.password;
       let Email = req.body.email;
       let company_name = req.body.company_name;
       let first_name = req.body.first_name;
@@ -143,7 +143,7 @@ var deactivateCompany =  (req, res)=>{
    let companyId = req.body.companyId;
    if(companyId){
   User.findByIdAndUpdate(companyId,
-    {IsDelete : true},
+    {IsDelete : true,company_license : 'deactivated'},
       function(err, doc) {
           if(err){
           return res.send({status:400, message:"Error occured to deactivate company!"});
