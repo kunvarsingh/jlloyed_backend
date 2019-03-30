@@ -10,8 +10,6 @@ router.get('/', function(req, res){
 // route here for user module----------------------
 router.post('/registration', usered.registration);
 router.post('/login',usered.login);
-router.post('/addNewRole', usered.addNewRole);
-
 router.get('/checkCompanyLicense/:id',usered.checkCompanyLicense);
 router.get('/getCompanyList', usered.getCompanyList);
 router.put('/deactivateCompany', usered.deactivateCompany);

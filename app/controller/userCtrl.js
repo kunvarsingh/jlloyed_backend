@@ -162,56 +162,27 @@ var editCompany =  (req, res)=>{
    let companyId = req.body.companyId;
    let license_start_date = req.body.license_start_date;
    let license_end_date = req.body.license_end_date;
+   let value= req.body.value;
    if(companyId){
-  User.findByIdAndUpdate(companyId,
-    {IsDelete : true, license_end_date : license_end_date ,license_start_date:  license_start_date},
-      function(err, doc) {
-          if(err){
-          return res.send({status:400, message:"Error occured to edit company!"});
-          }else{
-          //do stuff
-          return res.send({status:200, message:"edit company successfully!"});
-          }
-      }
-  );
+    User.findByIdAndUpdate(companyId,
+      {IsDelete : true, license_end_date : license_end_date ,license_start_date:  license_start_date,first_name:value.first_name,last_name:value.last_name,company_name:value.company_name},
+        function(err, doc) {
+            if(err){
+            return res.send({status:400, message:"Error occured to edit company!"});
+            }else{
+            //do stuff
+            return res.send({status:200, message:"edit company successfully!"});
+            }
+        }
+    );
   }else{
     return res.send({status:400, message:"Please send companyId!"});
   }  
 }
 
-var addNewRole = (req, res)=>{
-  let userId = req.body.userId;
-  let roles = req.body.roles;
-  if(userId && roles){
-  User.findByIdAndUpdate(req.body.userId,
-    {$push: {roles: req.body.roles}},
-    {safe: true, upsert: true},
-      function(err, doc) {
-          if(err){
-          return res.send({status:400, message:"Error occured to add new role!"});
-          }else{
-          //do stuff
-          return res.send({status:200, message:"New role added successfully!"});
-          }
-      }
-  );
-}else{
-  return res.send({status:400, message:"Please send userId and roles!"});
-}
-}
-
-
-
 // Export function for access interact with DB
   exports.registration = registration;
   exports.login  = login;
-
-
-  exports.addNewRole = addNewRole;
-
-
-
-
   exports.checkCompanyLicense = checkCompanyLicense;
   exports.getCompanyList = getCompanyList;
   exports.deactivateCompany = deactivateCompany;
